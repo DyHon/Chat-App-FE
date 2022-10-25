@@ -5,11 +5,13 @@ import Logout from './Logout';
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import { sendMessageRoute, getAllMessageRoute } from "../utils/APIRoutes";
+import Loading from '../components/Loading';
 
 function ChatContainer({ currentChat, currentUser, socket }) {
   const [messages, setMessages] = useState([]);
   const scrollRef = useRef();
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,12 +23,12 @@ function ChatContainer({ currentChat, currentUser, socket }) {
         setMessages(response.data);
       };
     };
-    fetchData();
+    setIsLoading(true);
+    fetchData().then(setIsLoading(false));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    console.log("🚀 ~ file: ChatContainer.jsx ~ line 32 ~ handleSendMsg ~ currentChat._id", currentChat._id)
     socket.current.emit('send-msg', {
       to: currentChat._id,
       from: currentUser._id,
@@ -49,7 +51,7 @@ function ChatContainer({ currentChat, currentUser, socket }) {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socket.current]);
+  }, []);
 
   useEffect(() => {
     arrivalMessage && setMessages((prev) => [...prev, arrivalMessage]);
@@ -75,23 +77,27 @@ function ChatContainer({ currentChat, currentUser, socket }) {
               </div>
               <Logout />
             </div>
-            <div className="chat-messages">
-              {messages.map((message) => {
-                return (
-                  <div ref={scrollRef} key={uuidv4()}>
-                    <div
-                      className={`message ${
-                        message.fromSelf ? "sended" : "recieved"
-                      }`}
-                    >
-                      <div className="content ">
-                        <p>{message.message}</p>
+            {
+              isLoading ? <Loading /> : (
+              <div className="chat-messages">
+                {messages.map((message) => {
+                  return (
+                    <div ref={scrollRef} key={uuidv4()}>
+                      <div
+                        className={`message ${
+                          message.fromSelf ? "sended" : "recieved"
+                        }`}
+                        >
+                        <div className="content ">
+                          <p>{message.message}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+              )
+            }
             <ChatInput handleSendMsg={handleSendMsg} />
           </Container>
         )

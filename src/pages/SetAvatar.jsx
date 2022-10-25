@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
-import loader from '../assets/loader.gif';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { setAvatarRoute } from '../utils/APIRoutes';
 import { toastConfig } from '../utils/config';
 import { Buffer } from 'buffer';
+import Loading from '../components/Loading';
 
 export default function SetAvatar() {
   
@@ -63,9 +63,7 @@ export default function SetAvatar() {
     <>
       {
         localStorage.getItem("user") && ( 
-        isLoading ? <Container>
-          <img src={loader} alt="" className='loader' />
-        </Container> : (
+        isLoading ? <Container><Loading /></Container> : (
         <Container>
           <div className='title-container'>
             <h1>Pick an avatar as your profile picture</h1>
