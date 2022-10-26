@@ -29,17 +29,10 @@ function Chat() {
   
   useEffect(() => {
     if (currentUser) {
-      console.log("Bug begining")
       socket.current = io.connect(host, {
-        withCredentials: true,
-        extraHeaders: {
-          "my-custom-header": "connect"
-        },
         transports: ['websocket']
       });
-      console.log("Bug begining")
       socket.current.emit('add-user', currentUser._id);
-      console.log("Bug begining")
     }
   }, [currentUser]);
 
