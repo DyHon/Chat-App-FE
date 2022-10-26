@@ -39,7 +39,6 @@ function Login() {
         toast.error(data.msg, toastConfig);
       }
       if (data.status === true) {
-        console.log(data.user);
         localStorage.setItem("user", JSON.stringify(data.user));
         navigate("/");
       }
