@@ -16,6 +16,8 @@ function ChatContainer({ currentChat, currentUser, socket }) {
   useEffect(() => {
     const fetchData = async () => {
       if (currentChat) {
+        setIsLoading(true);
+        console.log(isLoading);
         const response = await axios.post(getAllMessageRoute, {
           from: currentUser._id,
           to: currentChat._id,
@@ -23,8 +25,10 @@ function ChatContainer({ currentChat, currentUser, socket }) {
         setMessages(response.data);
       };
     };
-    setIsLoading(true);
-    fetchData().then(setIsLoading(false));
+    fetchData().then(() => {
+      console.log(isLoading);
+      setIsLoading(false);
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentChat]);
 
