@@ -34,7 +34,8 @@ function Chat() {
         withCredentials: true,
         extraHeaders: {
           "my-custom-header": "connect"
-        }
+        },
+        transports: ['websocket']
       });
       console.log("Bug begining")
       socket.current.emit('add-user', currentUser._id);
