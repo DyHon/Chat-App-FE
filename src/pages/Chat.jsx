@@ -30,7 +30,8 @@ function Chat() {
   useEffect(() => {
     if (currentUser) {
       socket.current = io.connect(host, {
-        transports: ['polling']
+        transports: ['websocket'],
+        
       });
       socket.current.emit('add-user', currentUser._id);
     }
