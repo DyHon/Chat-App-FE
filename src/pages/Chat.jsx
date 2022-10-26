@@ -6,7 +6,7 @@ import { allUsersRoute, host } from '../utils/APIRoutes';
 import Contacts from '../components/Contacts';
 import Welcome from '../components/Welcome';
 import ChatContainer from '../components/ChatContainer';
-import { io } from 'socket.io-client';
+import  io  from 'socket.io-client';
 
 function Chat() {
   const socket = useRef();
@@ -29,7 +29,7 @@ function Chat() {
   
   useEffect(() => {
     if (currentUser) {
-      socket.current = io(host);
+      socket.current = io.connect(host);
       socket.current.emit('add-user', currentUser._id);
     }
   }, [currentUser]);
