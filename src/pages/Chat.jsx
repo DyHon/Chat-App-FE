@@ -29,6 +29,7 @@ function Chat() {
   
   useEffect(() => {
     if (currentUser) {
+      console.log("Bug begining")
       socket.current = io.connect(host);
       socket.current.emit('add-user', currentUser._id);
     }
