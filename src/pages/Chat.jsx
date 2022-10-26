@@ -30,7 +30,12 @@ function Chat() {
   useEffect(() => {
     if (currentUser) {
       console.log("Bug begining")
-      socket.current = io.connect(host);
+      socket.current = io.connect(host, {
+        withCredentials: true,
+        extraHeaders: {
+          "my-custom-header": "connect"
+        }
+      });
       socket.current.emit('add-user', currentUser._id);
     }
   }, [currentUser]);
