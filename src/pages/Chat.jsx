@@ -31,7 +31,6 @@ function Chat() {
     if (currentUser) {
       console.log("Bug begining")
       socket.current = io.connect(host, {
-        withCredentials: true,
         extraHeaders: {
           "my-custom-header": "connect"
         }
