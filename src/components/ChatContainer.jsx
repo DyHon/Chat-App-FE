@@ -31,28 +31,27 @@ function ChatContainer({ currentChat, currentUser, socket }) {
   }, [currentChat]);
 
   const handleSendMsg = async (msg) => {
-    socket.current.emit('send-msg', {
+    const msgs = [...messages];
+    msgs.push({ fromSelf: true, message: msg });
+    setMessages(msgs);
+    socket.current.emit("send-msg", {
       to: currentChat._id,
       from: currentUser._id,
-      message: msg,
+      msg,
     });
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
       message: msg,
     });
-    const msgs = [...messages];
-    msgs.push({ fromSelf: true, message: msg });
-    setMessages(msgs);
   };
 
   useEffect(() => {
     if (socket.current) {
-      socket.current.on('msg-recieve', (msg) => {
+      socket.current.on("msg-recieve", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
-      })
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
