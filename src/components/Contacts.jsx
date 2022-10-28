@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../assets/logo.svg';
 
@@ -6,6 +7,8 @@ function Contacts({ contacts, changeChat }) {
   const [currentUserName, setCurrentUserName] = useState(undefined);
   const [currentUserImage, setCurrentUserImage] = useState(undefined);
   const [currentSelected, setCurrentSelected] = useState(undefined);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +26,9 @@ function Contacts({ contacts, changeChat }) {
     changeChat(contact);
   };
 
+  const changeAvatarHandler = () => {
+    navigate("/setavatar")
+  }
 
   
   return (
@@ -53,14 +59,14 @@ function Contacts({ contacts, changeChat }) {
                 })
               }
             </div>
-            <div className="current-user">
+            <div className="current-user" onClick={changeAvatarHandler}>
               <div className="avatar">
-                  <img src={`data:image/svg+xml;base64, ${currentUserImage}`} alt="" />
-                </div>
-                <div className="username">
-                  <h2>{ currentUserName }</h2>
-                </div>
+                <img src={`data:image/svg+xml;base64, ${currentUserImage}`} alt="" />
               </div>
+              <div className="username">
+                <h2>{ currentUserName }</h2>
+              </div>
+            </div>
           </Container>
         )
       }
@@ -132,6 +138,10 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     gap: 2rem;
+    &:hover {
+      opacity: 0.8;
+      cursor: pointer;
+    }
     .avatar {
       img {
         height: 4rem;

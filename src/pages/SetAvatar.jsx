@@ -22,6 +22,7 @@ export default function SetAvatar() {
     if (!localStorage.getItem("user")) {
       navigate("/login");
     };
+    
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

@@ -4,7 +4,7 @@ import ChatInput from './ChatInput';
 import Logout from './Logout';
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
-import { sendMessageRoute, getAllMessageRoute } from "../utils/APIRoutes";
+import { sendMessageRoute, getAllMessageRoute, seenMessagesRoute } from "../utils/APIRoutes";
 import Loading from '../components/Loading';
 
 function ChatContainer({ currentChat, currentUser, socket }) {
@@ -42,16 +42,24 @@ function ChatContainer({ currentChat, currentUser, socket }) {
     await axios.post(sendMessageRoute, {
       from: currentUser._id,
       to: currentChat._id,
-      message: msg,
+      message: { text: msg, seen: false },
     });
   };
 
   useEffect(() => {
+    const seenMessages = async (msg) => {
+      await axios.post(seenMessagesRoute, {
+        message: {text: msg, seen: true},
+        id: messages.at(-1).id,
+      });
+    };
     if (socket.current) {
       socket.current.on("msg-recieve", (msg) => {
         setArrivalMessage({ fromSelf: false, message: msg });
+        seenMessages(msg);
       });
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
