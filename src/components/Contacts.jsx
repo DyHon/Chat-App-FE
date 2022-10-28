@@ -52,8 +52,11 @@ function Contacts({ contacts, changeChat }) {
                         <img src={`data:image/svg+xml;base64, ${contact.avatarImage}`} alt="" />
                       </div>
                       <div className="username">
-                        <h3>{ contact.username }</h3>
+                        <h3>
+                          {contact.username}
+                        </h3>
                       </div>
+                      <div className="new-messages">1</div>
                     </div>
                   )
                 })
@@ -107,6 +110,9 @@ const Container = styled.div`
       }
     }
     .contact {
+      position: relative;
+      overflow: hidden;
+      text-overflow: ellipsis;
       background-color: #ffffff34;
       min-height: 5rem;
       cursor: pointer;
@@ -124,13 +130,27 @@ const Container = styled.div`
       }
       .username {
         h3 {
-          color: white;
+          color: white; 
         }
       }
     }
     .selected {
       background-color: #9a86f3;
     }
+  }
+  .new-messages {
+    z-index: 2;
+    position: absolute;
+    top: 1;
+    right: 8px;
+    border-radius: 100%;
+    box-shadow: 0 2px 2px 0px black;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-color: red;
+    color: white;
+    text-align: center;
+    font-size: 1rem;
   }
   .current-user {
     background-color: #0d0d30;
