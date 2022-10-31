@@ -56,7 +56,7 @@ function Contacts({ contacts, changeChat }) {
                           {contact.username}
                         </h3>
                       </div>
-                      <div className="new-messages">1</div>
+                      {/* <div className="new-messages">1</div> */}
                     </div>
                   )
                 })
@@ -138,7 +138,7 @@ const Container = styled.div`
       background-color: #9a86f3;
     }
   }
-  .new-messages {
+  /* .new-messages {
     z-index: 2;
     position: absolute;
     top: 1;
@@ -151,7 +151,7 @@ const Container = styled.div`
     color: white;
     text-align: center;
     font-size: 1rem;
-  }
+  } */
   .current-user {
     background-color: #0d0d30;
     display: flex;
