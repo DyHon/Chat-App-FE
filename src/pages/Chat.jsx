@@ -39,8 +39,8 @@ function Chat() {
     const checkCurrentUser = async () => {
       if (currentUser) {
         if (currentUser.isAvatarImageSet) {
-          const unSeenMsgFrom = await axios.get(`${unSeenMessageRoute}/${currentUser._id}`);
-          console.log("🚀 ~ file: Chat.jsx ~ line 43 ~ checkCurrentUser ~ unSeenMsgFrom", unSeenMsgFrom)
+          // const unSeenMsgFrom = await axios.get(`${unSeenMessageRoute}/${currentUser._id}`);
+          // console.log("🚀 ~ file: Chat.jsx ~ line 43 ~ checkCurrentUser ~ unSeenMsgFrom", unSeenMsgFrom)
           const data = await axios.get(`${allUsersRoute}/${currentUser._id}`);
           setContacts(data.data);
         } else {
